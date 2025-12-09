@@ -1,0 +1,683 @@
+--- Page 1 ---
+ 
+National Stock Exchange of India Limited  
+ 
+ 
+Circular  
+Department: MEMBER SERVICE DEPARTMENT  
+Download Ref No:  NSE/ MSD /67677  Date:  April  25, 202 5 
+Circular Ref. No:  18/202 5  
+ 
+All Members,  
+ 
+Market Data – Consolidate d Circular  
+ 
+Exchange has been issuing various circular s from time to time for content relating to  Market Data Broadcast . 
+This consolidated circular replaces earlier consolidated circular NSE/MSD/ 61737  dated April  26, 202 4, on the 
+captioned subject. This consolidated circular is prepared which is a compilation of subsequent circulars related 
+to Market Data Broadcast issued till March 31, 202 5. This co nsolidated circular encapsulates regulations /  
+instructions of all earlier circulars issued by Exchange from time to time and new instructions as applicable . 
+In this regards, members may please note the following:  
+ 
+A) The following operational instructions are to be noted and acted upon:  
+• Annexure 1 : Price volume, other related data, master updates, market open/close status message 
+broadcast, etc.  
+• Annexure 2 : Tick by Tick order and trade data via Multicast . 
+• Annexure 3: Advisory  for subscribing to market data broadcast  
+ 
+B) The parameters mentioned in the annexures will be applicable for all live and mock (both regular and BCP) 
+trading sessions.  
+ 
+C) Members shall have to strictly abide by the various circulars / communications / instructions / directions 
+issued by the Exchange from time to time and member s shall remain compliant in this regard. Additionally, 
+all communications/ instructions/ circulars/ directions from the Exchange have to be complied with in this 
+regard. Any non -compliance shall invite disciplinary action by the Exchange which will be initiated in 
+accordance with the applicable Exchange Byelaws, Rules and Regulations.  
+ 
+D) No information has been rescinded for this consolidation, however, in future for any rescinded information, 
+members may note the below:  
+ 
+
+--- Page 2 ---
+ 
+National Stock Exchange of India Limited  
+Page 2 of 13 
+ 
+Notwithstanding such rescission  
+a. Anything done or any action taken or purported to have been done or contemplated under the 
+rescinded guidelines before the commencement of this Master Circular shall be deemed to have been 
+done or taken or commenced or contemplated under the corresponding   provisions of the Master 
+Circular or rescinded guidelines whichever is applicable.  
+b. The  previous  operation of the rescinded guidelines or anything duly done or suffered  thereunder, any 
+right, privilege, obligation or liability acquired, accrued or incurred  under the rescinded guidelines, any 
+penalty, incurred in respect of any violati on committed against the rescinded guidelines, or any 
+investigation, legal proceeding or remedy in respect of any such right, privilege, obligation, liability, 
+penalty as aforesaid, shall remain unaffected as if the rescinded guidelines have never been res cinded.  
+ 
+For and on behalf of  
+National Stock Exchange of India Limited  
+ 
+Khushal Shah  
+Associate Vice President  
+ 
+ 
+  Toll Free No  Email id  
+1800 -266 -0050 (Option 1)  msm@nse.co.in  
+
+--- Page 3 ---
+ 
+National Stock Exchange of India Limited  
+Page 3 of 13 
+ 
+ 
+ 
+Table of Contents  
+I. Annexure 1  
+A. Price volume  (5 depth 1 second refresh)  - Combined  broadcast  
+B. Price volume  (5 depth 1 second refresh) - Stream wise broadcast  
+C. Limit Price Protection (LPP) broadcast   
+ 
+II. Annexure 2  
+A. Master files for MTBT  
+B. Segment wise details of Multicast IP address & port 
+C. Recovery of Tick by Tick data  
+D. Order Snapshot Recovery  
+ 
+III. Annexure 3  
+A. Advisory for subscribing to price volume (5 depth 1 second refresh), other related data, 
+master updates, market open/close status message broadcast etc . 
+B. Advisory for subscribing to Multicast Tick by Tick Feeds (MTBT)  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+--- Page 4 ---
+ 
+National Stock Exchange of India Limited  
+Page 4 of 13 
+ 
+ 
+Annexure 1  
+ 
+A) Combined broadcast - Price volume (5 depth 1 second refresh), other related data, master updates, 
+market open/close status message broadcast etc.  
+ 
+Stream  Security / 
+Contracts  Multicast IP  Port  Approx. 
+bandwidth 
+utilization * 
+CM (Source 1)  Active  239.50.50.1 1 108 11 600 Kbps  
+CM (Source 2)  239.50.50. 16 108 16 600 Kbps  
+CD (Source 1)  Active  239.50.50.72  10872  600 Kbps  
+CD (Source 2)  239.50.50.77  10877  600 Kbps  
+FO Stream A (Source 1)  Active  239.50.50.22  10822  2.5 Mbps  
+FO Stream A (Source 2)  239.50.50.27  10827  2.5 Mbps  
+CO (Source 1)  Active  239.50.50.51  18051  80 Kbps  
+CO (Source 2)  239.50.50.56  10856  80 Kbps  
+SLBM (Source 1)  Active  239.50.50.61  10861  40 Kbps  
+SLBM (Source 2)  239.50.50.66  10866  40 Kbps  
+*Approx. Bandwidth utilization is for single parameter  
+ 
+B) Stream wise broadcast - Price volume (5 depth 1 second refresh), other related data, master 
+updates, market open/close status message broadcast etc.  
+ 
+For CM Segment:  
+ 
+Stream**  Stream 
+ID Security / 
+Contracts**  (Source 1)  (Source 2)  Approx. 
+bandwidth 
+utilization  Multicast IP  Port  Multicast IP  Port  
+CM 
+Stream 1  1 As per 
+master 
+stream file  239.50.51.201  15201  239.50.51.211  15211  
+1.5 Mbps  239.50.51.200  15200  239.50.51.200  15200  
+CM 
+Stream 2  2 As per 
+master 
+stream file  239.50.51.202  15202  239.50.51.212  15212  
+1.5 Mbps  239.50.51.200  15200  239.50.51.200  15200  
+CM 
+Stream 3  3 As per 
+master 
+stream file  239.50.51.203  15203  239.50.51.213  15213  
+1.5 Mbps  239.50.51.200  15200  239.50.51.200  15200  
+CM 
+Stream 4  4 As per 
+master 
+stream file  239.50.51.204  15204  239.50.51.214  15214  
+1.5 Mbps  239.50.51.200  15200  239.50.51.200  15200  
+CM 
+Stream 5  5 As per 
+master 
+stream file  239.50.51.205  15205  239.50.51.215  15215  
+1.5 Mbps  239.50.51.200  15200  239.50.51.200  15200  
+
+--- Page 5 ---
+ 
+National Stock Exchange of India Limited  
+Page 5 of 13 
+ 
+ 
+ 
+For FO Segment : 
+ 
+Stream  Stream 
+ID Security / 
+Contracts *  (Source 1)  (Source 2)  Approx. 
+bandwidth 
+utilization  Multicast IP  Port  Multicast IP  Port  
+FO 
+Stream 
+B 1 As per 
+master 
+stream file  239.50.51.21  15021  239.50.51.121  15121  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+C 2 As per 
+master 
+stream file  239.50.51.22  15022  239.50.51.122  15122  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+D 3 As per 
+master 
+stream file  239.50.51.23  15023  239.50.51.123  15123  
+0.6 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+E 4 As per 
+master 
+stream file  239.50.51.24  15024  239.50.51.124  15124  
+0.9 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+F 5 As per 
+master 
+stream file  239.50.51.25  15025  239.50.51.125  15125  
+0.4 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+G 6 As per 
+master 
+stream file  239.50.51.26  15026  239.50.51.126  15126  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+H 7 As per 
+master 
+stream file  239.50.51.27  15027  239.50.51.127  15127  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+I 8 As per 
+master 
+stream file  239.50.51.28  15028  239.50.51.128  15128  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+J 9 As per 
+master 
+stream file  239.50.51.29  15029  239.50.51.129  15129  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+K 10 As per 
+master 
+stream file  239.50.51.30  15030  239.50.51.130  15130  
+0.4 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+L 11 As per 
+master 
+stream file  239.50.51.31  15031  239.50.51.131  15131  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+
+--- Page 6 ---
+ 
+National Stock Exchange of India Limited  
+Page 6 of 13 
+ 
+FO 
+Stream 
+M 12 As per 
+master 
+stream file  239.50.51.32  15032  239.50.51.132  15132  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+N 13 As per 
+master 
+stream file  239.50.51.33  15033  239.50.51.133  15133  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+O 14 As per 
+master 
+stream file  239.50.51.34  15034  239.50.51.134  15134  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+P 15 As per 
+master 
+stream file  239.50.51.35  15035  239.50.51.135  15135  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+Q 16 As per 
+master 
+stream file  239.50.51.36  15036  239.50.51.136  15136  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+R 17 As per 
+master 
+stream file  239.50.51.37  15037  239.50.51.137  15137  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+S 18 As per 
+master 
+stream file  239.50.51.38  15038  239.50.51.138  15138  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+ 
+Note s: 1) Stream wise broadcast is not recommended for Neatplus application.  
+2) *Members are required to refer the Master Files for MTBT (point A of Annexure 2) for details regarding 
+tokens broadcasted in the respective stream (s). 
+ 
+Members can refer file “cm_index_token_mstr.txt” to identify the index tokens. This file is available on 
+extranet under path “/common/ntneat” . 
+ 
+ 
+C) Limit Price Protection Range (LPP) Broadcast:  
+ 
+Limit Price Protection Range is applicable only in FO segment and Exchange provides related broadcast for 
+NNF users as below:  
+ 
+Limit Price protection Range (LPP) Parameters  
+Security / 
+Contracts  Segment  Source 1  Source 2  Approx. 
+bandwidth 
+utilization  Multicast IP  Broadcast 
+Port  Multicast IP  Broadcast 
+Port  
+Limit Price 
+Protection 
+Range (LPP)  FO 239.55.55.21  55021  239.55.55.121  55121  2 Mbps  
+
+--- Page 7 ---
+ 
+National Stock Exchange of India Limited  
+Page 7 of 13 
+ 
+COM  239.55.55.51  55051  - - 500 Kbps  
+ 
+ 
+ 
+Annexure 2  
+ 
+Tick by Tick order and trade data via Multicast (MTBT)  
+ 
+A) Master Files for MTBT:  
+ 
+Exchange provides MTBT master files for mapping information about the stream id and token number of the 
+security/contract on specified extranet paths as mentioned below:  
+ 
+Segment  Extranet path  File name  
+CM /ftp/common/tbt_masters  cm_contract_stream_info.csv  
+FO /faoftp/faocommon/tbt_masters  fo_spd_contract_stream_info.csv 
+fo_contract_stream_info.csv  
+CD /cdsftp/cdscommon/tbt_masters  cd_contract_stream_info.csv 
+cd_spd_contract_stream_info.csv  
+CO /comtftp/comtcommon/tbt_masters  co_contract_stream_info.csv  
+ 
+The header of above file formats in CM, FO, CD and CO segments are provided in the MTBT API specification 
+document available on the website : https://www.nseindia.com/trade/platform -services -neat -trading -
+system -protocols  . 
+ 
+B) Segment wise details of Multicast IP address and port are as below:  
+ 
+Market participants are advised to monitor and adequately size their infrastructure and systems while 
+subscribing to these feeds.  
+ 
+CM 
+Stream 
+ID Contents  Source 1  Source 2  
+(Delayed Feed)  Approx. 
+bandwidth 
+utilization  Multicast IP  Port  Multicast IP  Port  
+1 As per master 
+stream file  239.60.60.41  16641  239.60.60.31  10631  8 Mbps  
+2 As per master 
+stream file  239.60.60.42  16642  239.60.60.32  10632  8 Mbps  
+3 As per master 
+stream file  239.60.60.43  16643  239.60.60.33  10633  8 Mbps  
+
+--- Page 8 ---
+ 
+National Stock Exchange of India Limited  
+Page 8 of 13 
+ 
+4 As per master 
+stream file  239.60.60.44  16644  239.60.60.34  10634  8 Mbps  
+5 As per master 
+stream file  239.60.60.45  16645  239.60.60.35  10635  8 Mbps  
+ 
+ 
+ 
+FO 
+Stream 
+ID Contents *  Source 1  Source 2  Approx. 
+bandwidth 
+utilization  (Delayed Feed)  
+Multicast IP  Port  Multicast IP  Port  
+1 As per master  
+stream file  239.70.70.41  17741  239.70.70.31  10831  20 Mbps  
+2 As per master  
+stream file  239.70.70.42  17742  239.70.70.32  10832  6 Mbps  
+3 As per master  
+stream file  239.70.70.43  17743  239.70.70.33  10833  40 Mbps  
+4 As per master  
+stream file  239.70.70.44  17744  239.70.70.34  10834  18 Mbps  
+5 As per master  
+stream file  239.70.70.45  17745  239.70.70.35  10835  40 Mbps  
+6 As per master  
+stream file  239.70.70.46  17746  239.70.70.36  10836  18 Mbps  
+7 As per master  
+stream file  239.70.70.47  17747  239.70.70.37  10837  40 Mbps  
+8 As per master  
+stream file  239.70.70.48  17748  239.70.70.38  10838  40 Mbps  
+9 As per master  
+stream file  239.70.70.49  17749  239.70.70.39  10839  40 Mbps  
+10 As per master  
+stream file  239.70.70.50  17750  239.70.70.40  10840  40 Mbps  
+11 As per master  
+stream file  239.70.70.61  17761  239.70.70.71  10871  40 Mbps  
+12 As per master  
+stream file  239.70.70.62  17762  239.70.70.72  10872  40 Mbps  
+13 As per master  
+stream file  239.70.70.63  17763  239.70.70.73  10873  40 Mbps  
+14 As per master  
+stream file  239.70.70.64  17764  239.70.70.74  10874  40 Mbps  
+15 As per master  
+stream file  239.70.70.65  17765  239.70.70.75  10875  40 Mbps  
+
+--- Page 9 ---
+ 
+National Stock Exchange of India Limited  
+Page 9 of 13 
+ 
+16 As per master  
+stream file  239.70.70.66  17766  239.70.70.76  10876  40 Mbps  
+17 As per master  
+stream file  239.70.70.67  17767  239.70.70.77  10877  40 Mbps  
+18 As per master  
+stream file  239.70.70.68  17768  239.70.70.78  10878  40 Mbps  
+ 
+ 
+CD 
+Stream 
+ID Contents  Source 1  Source 2  
+(Delayed Feed)  Approx. 
+bandwidth 
+utilization  Multicast IP  Port  Multicast IP  Port  
+1 As per master 
+stream file  239.80.80.41  18841  239.80.80.31  10831  1.5 Mbps  
+2 As per master 
+stream file  239.80.80.42  18842  239.80.80.32  10832  1.5 Mbps  
+ 
+ 
+CO 
+Stream 
+ID Contents  Source 1  Source 2  
+(Delayed Feed)  Approx. 
+bandwidth 
+utilization  Multicast IP  Port  Multicast IP  Port  
+1 All Commodity 
+Derivatives 
+Contracts  239.90.90.41  19941  239.90.90.51  19951  60Kbps  
+ 
+ 
+C) Recovery of tick by tick data  
+ 
+Tick by tick data is available for recovery on TCP. At the Exchange end the recovery requests are managed and 
+serviced through a setup consisting of a load balancer server and multiple recovery servers. If the client end 
+application misses any tick data, i t can recover the missed ticks by sending request on TCP to the server IP 
+provided by the Exchange (segment wise IPs and ports provided below). The response messages will be 
+provided on TCP. The TCP connections for recovering messages are not persistent.  
+ 
+A new connection has to be made for each and every  recovery request. The recovery requests are served from 
+file stored in recovery server. Due to this factor, there is a lag / delay in the tick data from recovery servers, as 
+compared to direct multicast feed.  
+ 
+Segment  IP Address  Port  
+CM 172.28.124.34  10984  
+FO 172.28.124.30  10990  
+
+--- Page 10 ---
+ 
+National Stock Exchange of India Limited  
+Page 10 of 13 
+ 
+CD 172.28.124.32  10970  
+CO  172.19.125.84  10960  
+ 
+ 
+D) Order Snapshot Recovery for Multicast Tick by Tick broadcast  
+ 
+MTBT Order Book Snapshot Recovery Server provides latest picture of the order book, constructed from MTBT 
+feed. This Order Book Snapshot is refreshed every 30 seconds. Client requesting this snapshot recovery will 
+get all the outstanding orders in the orde r book till the last refresh time for a particular stream.  
+ 
+Parameters  for connecting  for Order  Snapshot  Recovery  
+IP of Solace  172.28.124.44  
+Port  of Solace  10987  
+User  Name  member_cm_prod  
+Password  LxJRe#0414  
+Message  VPN  Name  od_cm_prod   
+Segment  Stream  ID QUEUE  NAMES  
+CM  1 lvq.nse.cm.od.1.orderbook  
+2 lvq.nse.cm.od.2.orderbook  
+3 lvq.nse.cm.od.3.orderbook  
+4 lvq.nse.cm.od.4.orderbook  
+5 lvq.nse.cm.od.5.orderbook  
+ 
+Parameters for connecting for Order  Snapshot  Recovery  
+IP of Solace  172.28.124.40  
+Port of Solace  10986  
+User Name  member_fo_prod  
+Password  YoEvx#9675  
+Message VPN Name  od_fo_prod  
+  
+Segment  Stream ID  QUEUE NAMES  
+ 
+FO 1 lvq.nse.fo.od.1.orderbook  
+2 lvq.nse.fo.od. 2.orderbook  
+3 lvq.nse.fo.od.3.orderbook  
+4 lvq.nse.fo.od.4.orderbook  
+5 lvq.nse.fo.od.5.orderbook  
+6 lvq.nse.fo.od.6.orderbook  
+7 lvq.nse.fo.od.7.orderbook  
+8 lvq.nse.fo.od.8.orderbook  
+
+--- Page 11 ---
+ 
+National Stock Exchange of India Limited  
+Page 11 of 13 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Parameters  for connecting  for Order  Snapshot  Recovery  
+IP of Solace  172.28.124.42  
+Port  of Solace  10988  
+User  Name  member_cd_prod  
+Password  48Qd5d  
+Message  VPN  Name  od_cd_prod   
+Segment  Stream  ID QUEUE  NAMES  
+CD  1 lvq.nse.cd.od.1.orderbook  
+2 lvq.nse.cd.od.2.orderbook  
+ 
+Important usage guidelines for connecting to Order Book  Snapshot  recovery:  
+ 
+Members  are suggested to use snapshot recovery whenever they have lost large number of ticks on multicast 
+or they have joined the MTBT feed very late. This will reduce the time to recover all the missed ticks through 
+recovery and build the order book up to the la test point.  
+ 
+At the Exchange end the snapshot recovery is disseminated through Solace Application / Hardware. The 
+snapshot recovery needs to be requested by client applications through Solace API. After receiving the 
+snapshot message, the client applications are suppos ed to disconnect. It is possible that the client 
+applications can get disconnected during recovery of snapshot message, due to snapshot message being 
+refreshed at the Exchange end. In such cases client applications can again try to recover the snapshot 
+mes sage.  
+ 
+Members are expected to use 7. 32.0.3 version  of SOLACE API which can be downloaded from 
+https://solace.com/downloads/  for best experience.  
+General Notes applicable for all types of market data broadcast:  
+ 
+• The size of broadcast indicated above is an estimated approximation and shall change depending upon 
+the market activity. Thus, Market participants are strongly advised to monitor and adequately size their 
+infrastructure and systems while subscribing to the se feeds.  9 lvq.nse.fo.od.9.orderbook  
+ 10 lvq.nse.fo.od. 10.orderbook  
+ 11 lvq.nse.fo.od.11.orderbook  
+ 12 lvq.nse.fo.od.12.orderbook  
+ 13 lvq.nse.fo.od.13.orderbook  
+ 14 lvq.nse.fo.od.14.orderbook  
+ 15 lvq.nse.fo.od.15.orderbook  
+ 16 lvq.nse.fo.od.16.orderbook  
+ 17 lvq.nse.fo.od.17.orderbook  
+ 18 lvq.nse.fo.od.18.orderbook  
+
+--- Page 12 ---
+ 
+National Stock Exchange of India Limited  
+Page 12 of 13 
+ 
+• With respect to using Exchange data, Members may kindly take note of Exchange circulars  
+NSE/ MSD/64333  dated October 03, 2024,  NSE/COMP/56426  dated April 20, 2023 and 
+NSE/MEM/26958  dated June 19, 2 014. Exchange data can be used by Member’s clients who are 
+registered for trading with the member on the Exchange in any segment.  
+• Members shall be solely responsible for implementing and maintaining redundancy for market data 
+broadcast subscribed from NSEIL. NSEIL shall not be held liable in any manner whatsoever including 
+but not limited to for any disconnection, excess bandwidth ut ilization, related latency issues’ etc. which 
+arises out of the member’s decisions on market data broadcast configurations . 
+• National Stock Exchange of India Limited (“NSEIL”) strongly recommends its member to build resilience 
+and redundancy in their subscription to market data broadcast provided by NSEIL, to ensure continuity 
+of their business operations. NSEIL has made enablin g provisions for members to implement 
+redundancies by providing two sources of data and/or data recovery mechanisms. Members shall be 
+solely responsible for implementing and maintaining redundancy for market data broadcast subscribed 
+from NSEIL. NSEIL shal l not be held liable in any manner whatsoever including but not limited to for any 
+disconnection, excess bandwidth utilization, related latency issues’ etc. which arises out of the 
+member’s decisions on market data broadcast configurations.  
+ 
+ 
+Annexure 3 
+ 
+Members are requested to take note of below advisory and guidance regarding market data broadcast 
+parameters:  
+A. Advisory for members subscribing to Price volume (5 depth 1 second refresh), other related data, 
+master updates, market open/close status message broadcast etc.  
+• NSEIL has made enabling provisions for members to implement redundancies by providing tw o sources 
+of data broadcast parameters namely Source 1 and source 2.  
+• Exchange has provided option for Members to add the broadcast configuration for both sources in the 
+Exchange provided UDP application for windows as well as linux OS.  
+• Member can configure the sources 1 & 2 in active – active manner / active – passive manner as per their 
+business requirement.   
+o Exchange broadcasts the market data on both the sources/channels simultaneously. Members 
+are required to select one of the option  
+▪ Option1 - active -active manner i.e. both the sources/channels are configured at 
+member’s end and market data is received by members on both the sources/channels 
+OR  
+▪ Option2 - active -passive manner i.e. both the sources/channels are configured at 
+member’s end but market data is received by members on the source which is activated 
+by member.  
+o The Exchange has multiple backup systems and processes besides having various checks and 
+balances to ensure proper functioning of the trading systems. However, the possibility of an 
+event where Exchange is not able to broadcast the market data on one of th e source/channel 
+cannot be ruled out. Hence, the above action will help members to quickly shift the source at 
+
+--- Page 13 ---
+ 
+National Stock Exchange of India Limited  
+Page 13 of 13 
+ 
+their end and mitigate the risk of business disruption in case one of the source/channel goes 
+down.  
+o It is strongly recommended that the members build resiliency in their implementation by 
+choosing any of the above -mentioned options. Members shall be solely responsible for 
+implementing and maintaining redundancy for market data broadcast subscribed from t he 
+Exchange and Exchange will not be liable for any business disruption at member’s end arising 
+due to no action by members.  
+• For members using Exchange provided UDP application, option is available to members to start / stop 
+the broadcast for all / respective streams as per their convenience in the UDP application keeping in 
+mind the bandwidth requirements of the broadcast strea ms.  
+• Manuals for UDP application for Windows as well as Linux are available on Extranet  for reference.  
+ 
+B. Advisory for members subscribing to Multicast Tick By Tick Feeds (MTBT)  
+• The Tick Data broadcast feed provided by the Exchange is available on two separate Multicast Channels 
+(Source 1 and Source 2) for each Stream on active -active basis. On one multicast channel the feed is 
+delayed and lagging behind the other feed.  Please refer the captioned circular s for details regarding 
+the Source 1 and Source 2 multicast IP and port s. 
+• Kindly note that the MTBT data broadcast being on UDP, there can be occasional drops in the 
+broadcasts provided by the Exchange due to the same.  It is an expected behaviour.  
+• It is recommended that the end user application should subscribe to both multicast channels for each 
+stream and receives the data from both the channels in active -active manner. This needs to be done 
+to ensure that data loss is minimized for the receiving applications as there is a possibility of data loss 
+in multicast protocol.  
+• If the end user application misses any tick data from both the active -active channels it can recover the 
+ticks by sending recovery requests to recovery server on TCP. The recovery requests are served from 
+file stored in recovery server. Due to this factor,  there is a lag / delay in the tick data from recovery 
+servers, as compared to direct multicast feed.  
+• Members are requested to refer the API’s for MTBT, wherein we have provided the tuning parameter 
+for receiving MTBT as well as guidelines for recovery.  
+• Exchange also provides facility for snapshot recovery. Members are suggested to use snapshot 
+recovery whenever they have lost large number of ticks on multicast or they have joined the MTBT feed 
+very late. This will reduce the time to recover all the missed ticks through recovery and build the order 
+book up to  the latest point.  
+• API for MTBT can be accessed from NSE website under the following link: 
+https://www.nseindia.com/trade/platform -services -neat -trading -system -protocols  
+ 
+Relevant Circulars:  
+Download No.  Date  
+NSE/MSD/54696  December 02, 202 2 
+NSE/MSD/62785  July 04, 2024  
+NSE/COM/66509  February 05, 2025  
+ 

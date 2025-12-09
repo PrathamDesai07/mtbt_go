@@ -1,0 +1,457 @@
+--- Page 1 ---
+ 
+National Stock Exchange of India Limited  
+  
+Circular  
+Department: MEMBER SERVICE DEPARTMENT  
+Download Ref No:  NSE/ MSD /69181  Date:  July  18, 202 5 
+Circular Ref. No:  35/202 5  
+ 
+ 
+All Members,  
+ 
+Market Data – New broadcast parameters in Futures & Options  Segment  
+  
+This circular is in continuation to Exchange consolidated NSE/MSD/ 67677  dated April 25, 202 5 regarding 
+Market data broadcast.  
+ 
+Members are hereby informed that the Exchange is i ntroducing new broadcast parameters for market data in 
+the F&O segment  for receiving new transcodes of Ticker and Market Index, Market Watch Update &  Underlying  
+Open Interest  supporting enhanced data dissemination . 
+ 
+Accordingly, members are requested to refer to the annexures below for access details and the necessary 
+system setup to receive market data broadcasts from the new parameters . 
+ 
+Sr. No.  Market Type Data  Change  Change Description  
+1 Price volume (5 depth 1 
+second refresh), other 
+related data, master 
+updates, market open/close 
+status message broadcast 
+etc. available in FO segment  FO segment new 
+Broadcast parameters  are 
+being introduced  Table A ( message broadcast  in FO 
+segment – 1 second frequency 5 
+depth data) of Annexure 1 of circular 
+67677  
+2 Price volume (5 depth 1 
+second refresh), other 
+related data, master 
+updates, market open/close 
+status message broadcast 
+etc. on streams broadcast 
+available in FO segment  FO segment new 
+Broadcast parameters  for 
+all Streams are being 
+introduced  Table B (additional streams in FO 
+segment – 1 second frequency 5 
+depth data) of Annexure 1 of circular 
+67677  
+ 
+The changes shall be effective from mock of July 19, 202 5 and will be available in the Live environment with 
+effect from July 21, 202 5. 
+ 
+
+--- Page 2 ---
+ 
+National Stock Exchange of India  Limited  
+Page 2 of 7 
+ 
+The updated annexure s for details regarding the new parameters of the respective streams / Stream Id's 
+for FO segment  are provided below . 
+ 
+Important instructions for implementation of the above:  
+ 
+1. An interim coexistence period for receiving  broadcast from both  existing and new parameters  shall be 
+provided by the Exchange, after which Exchange shall discontinue the existing broadcast parameters . 
+ 
+2. Members are required to ensure that all necessary SOP / policy / procedures / mechanism are in place to 
+switch to existing parameters if required in LIVE during this co -existence period.  
+ 
+3. Members are required to note  there is no change in UDP application version  and are advised to take 
+market data broadcast from single parameter at a time  i.e. either existing or new parameter. Refer to the 
+annexure provided below for the parameters.  
+ 
+4. Existing  transcodes (except 7201, 7202 & 7130)  and new transcodes  (i.e. 17201, 17202 & 17130)  will be 
+available in new  broadcast  parameters . For details regarding new transcodes, kindly refer relevant NNF API 
+document (link provided in point 6). 
+ 
+5. Details of coexistence and migration plan for Market data Broadcast, NEAT and NNF users are as below:  
+Functionality  Date  
+Release of New market data broadcast parameters  (5 depth 1 second 
+refresh)  July 19, 202 5 
+Release of new NEAT version (7.8.2 ) with new broadcast market data 
+parameters  (5 depth 1 second refresh)  July 19, 202 5 
+Discontinuation of existing market data broadcast parameters for NNF 
+users (5 depth 1 second refresh)  Shall be communicated 
+separately  
+ 
+6. For further details of implementation, members may refer the latest NNF API document (Version 9.43 ) 
+detailing the encryption protocol is available on Exchange website under path:  
+https://www.nseindia.com/trade/platform -services -neat -trading -system -protocols    
+ 
+7. Details of the applicable NEAT version shall be communicated vide separate circular.  
+ 
+ 
+For and on behalf of  
+National Stock Exchange of India Limited  
+ 
+Khushal Shah  
+Associate Vice President  
+ 
+Toll Free No  Email id  
+1800 -266 -0050 (Option 1)  msm@nse.co.in  
+
+--- Page 3 ---
+ 
+National Stock Exchange of India  Limited  
+Page 3 of 7 
+ 
+ 
+Annexure 1  
+ 
+Updated Table A  (Combined broadcast ) 
+ 
+Price volume (5 depth 1 second refresh), other related data, master updates, market open / close status 
+message broadcast etc.  
+Stream  Security 
+/ 
+Contracts  Existing Parameter  New Parameter for receiving market 
+data through  Existing transcodes 
+(except 7201, 7202 & 7130)  and New 
+transcodes  (17201 , 17202  & 17130 ) Approx. 
+bandwidth 
+utilization*  
+Multicast IP  Port  Multicast IP  Port  
+FO 
+(Source 
+1) Active  239.50.50. 22 10822  239.50.50.21  10821  2.5 Mbps  
+FO 
+(Source 
+2) 239.50.50. 27  10827  239.50.50.26  10826  2.5 Mbps  
+*Approx. Bandwidth utilization is for single parameter i.e. either existing or new parameters  
+ 
+Table B  (Stream wise Broadcast)  
+ 
+Price volume (5 depth 1 second refresh), other related data, master updates, market open / close status 
+message broadcast etc. on additional streams in FO Segment:  
+ 
+Existing broadcast parameters:  
+ 
+Stream  Stream 
+ID Security / 
+Contracts *  (Source 1)  (Source 2)  Approx. 
+bandwidth 
+utilization  Multicast IP  Port  Multicast IP  Port  
+FO 
+Stream 
+B 1 As per 
+master 
+stream file  239.50.51.21  15021  239.50.51.121  15121  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+C 2 As per 
+master 
+stream file  239.50.51.22  15022  239.50.51.122  15122  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+D 3 As per 
+master 
+stream file  239.50.51.23  15023  239.50.51.123  15123  
+0.6 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+4 239.50.51.24  15024  239.50.51.124  15124  0.9 Mbps  
+
+--- Page 4 ---
+ 
+National Stock Exchange of India  Limited  
+Page 4 of 7 
+ 
+FO 
+Stream 
+E As per 
+master 
+stream file  239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+F 5 As per 
+master 
+stream file  239.50.51.25  15025  239.50.51.125  15125  
+0.4 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+G 6 As per 
+master 
+stream file  239.50.51.26  15026  239.50.51.126  15126  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+H 7 As per 
+master 
+stream file  239.50.51.27  15027  239.50.51.127  15127  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+I 8 As per 
+master 
+stream file  239.50.51.28  15028  239.50.51.128  15128  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+J 9 As per 
+master 
+stream file  239.50.51.29  15029  239.50.51.129  15129  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+K 10 As per 
+master 
+stream file  239.50.51.30  15030  239.50.51.130  15130  
+0.4 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+L 11 As per 
+master 
+stream file  239.50.51.31  15031  239.50.51.131  15131  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+M 12 As per 
+master 
+stream file  239.50.51.32  15032  239.50.51.132  15132  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+N 13 As per 
+master 
+stream file  239.50.51.33  15033  239.50.51.133  15133  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+O 14 As per 
+master 
+stream file  239.50.51.34  15034  239.50.51.134  15134  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+P 15 As per 
+master 
+stream file  239.50.51.35  15035  239.50.51.135  15135  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+Q 16 As per 
+master 
+stream file  239.50.51.36  15036  239.50.51.136  15136  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+17 239.50.51.37  15037  239.50.51.137  15137  3 Mbps  
+
+--- Page 5 ---
+ 
+National Stock Exchange of India  Limited  
+Page 5 of 7 
+ 
+FO 
+Stream 
+R As per 
+master 
+stream file  239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+S 18 As per 
+master 
+stream file  239.50.51.38  15038  239.50.51.138  15138  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+ 
+New broadcast parameters:   
+Members using stream broadcast are required to change to the updated parameters to receive the 
+Existing transcodes (except 7201, 7202 & 7130)  and  new transcodes  (i.e. 17201, 17202  & 17130)  as per 
+table below : 
+ 
+Stream  Stream 
+ID Security / 
+Contracts *  (Source 1)  (Source 2)  Approx. 
+bandwidth 
+utilization  Multicast IP  Port  Multicast IP  Port  
+FO 
+Stream 
+B 1 As per 
+master 
+stream file  239.50.51.51  15051  239.50.51.151  15151  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+C 2 As per 
+master 
+stream file  239.50.51.5 2 1505 2 239.50.51. 152 15152 
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+D 3 As per 
+master 
+stream file  239.50.51.53  15053  239.50.51.153  15153  
+0.6 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+E 4 As per 
+master 
+stream file  239.50.51.54  15054  239.50.51.154  15154  
+0.9 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+F 5 As per 
+master 
+stream file  239.50.51.55  15055  239.50.51.155  15155  
+0.4 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+G 6 As per 
+master 
+stream file  239.50.51.56  15056  239.50.51.156  15156  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+H 7 As per 
+master 
+stream file  239.50.51.57  15057  239.50.51.157  15157  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+I 8 As per 
+master 
+stream file  239.50.51.58  15058  239.50.51.158  15158  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+9 239.50.51.59  15059  239.50.51.159  15159  0.1 Mbps  
+
+--- Page 6 ---
+ 
+National Stock Exchange of India  Limited  
+Page 6 of 7 
+ 
+FO 
+Stream 
+J As per 
+master 
+stream file  239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+K 10 As per 
+master 
+stream file  239.50.51.60  15060  239.50.51.160  15160  
+0.4 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+L 11 As per 
+master 
+stream file  239.50.51.61  15061  239.50.51.161  15161  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+M 12 As per 
+master 
+stream file  239.50.51.62  15062  239.50.51.162  15162  
+0.1 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+N 13 As per 
+master 
+stream file  239.50.51.63  15063  239.50.51.163  15163  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+O 14 As per 
+master 
+stream file  239.50.51.64  15064  239.50.51.164  15164  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+P 15 As per 
+master 
+stream file  239.50.51.65  15065  239.50.51.165  15165  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+Q 16 As per 
+master 
+stream file  239.50.51.66  15066  239.50.51.166  15166  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+R 17 As per 
+master 
+stream file  239.50.51.67  15067  239.50.51.167  15167  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+FO 
+Stream 
+S 18 As per 
+master 
+stream file  239.50.51.68  15068  239.50.51.168  15168  
+3 Mbps  
+239.50.51.20  15020  239.50.51.20  15020  
+ 
+Note s: 1) Stream wise broadcast is not recommended for Neatplus application.  
+2) *Members are required to refer the Master Files for MTBT  for details regarding tokens broadcasted in 
+the respective stream(s).  
+ 
+General Notes applicable for all types of market data broadcast:  
+• The size of broadcast indicated above is an estimated approximation and shall change depending upon 
+the market activity. Thus, Market participants are strongly advised to monitor and adequately size their 
+infrastructure and systems while subscribing to the se feeds.   
+• With respect to using Exchange data, Member’s may kindly take note of Exchange circular s 
+NSE/MSD/64333  dated October 03, 2024 , NSE/COMP/56426  dated April 20, 2023 and NSE/MEM/26958  
+
+--- Page 7 ---
+ 
+National Stock Exchange of India  Limited  
+Page 7 of 7 
+ 
+dated June 19, 2014. Exchange data can be used by Member’s clients who are registered for trading with 
+the member on the Exchange in any segment.  
+• With respect to using Exchange data, Member’s may also kindly take note of Exchange circular 
+NSE/MSD/54696  dated December 02, 2022 regarding Market Data Broadcasts – Advisory and Member 
+Guide.  
+• Members shall be solely responsible for implementing and maintaining redundancy for market data 
+broadcast subscribed from NSEIL. NSEIL shall not be held liable in any manner whatsoever including but 
+not limited to for any disconnection, excess bandwidth ut ilization, related latency issues’ etc. which arises 
+out of the member’s decisions on market data broadcast configurations . 
+• National Stock Exchange of India Limited (“NSEIL”) strongly recommends its members to build resilience 
+and redundancy in their subscription to market data broadcast provided by NSEIL, to ensure continuity of 
+their business operations. NSEIL has made enabli ng provisions for members to implement redundancies 
+by providing two sources of data and/or data recovery mechanisms. Members shall be solely responsible 
+for implementing and maintaining redundancy for market data broadcast subscribed from NSEIL. NSEIL 
+shall not be held liable in any manner whatsoever including but not limited to for any disconnection, 
+excess bandwidth utilization, related latency issues’ etc. which arises out of the member’s decisions on 
+market data broadcast configurations.  

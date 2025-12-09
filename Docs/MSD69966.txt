@@ -1,0 +1,75 @@
+--- Page 1 ---
+ 
+National Stock Exchange of India Limited  
+  
+Circular  
+Department: MEMBER SERVICE DEPARTMENT  
+Download Ref No:  NSE/ MSD /69966  Date:  September  02, 202 5 
+Circular Ref. No:  41/202 5  
+ 
+ 
+All Members,  
+ 
+Market Data – Extension of Discontinuation of Existing broadcast parameters in Futures & Options  
+Segment  
+  
+This is in reference to Exchange circulars NSE/MSD/69181  dated July 18, 2025 , and NSE/MSD/6 9328  dated 
+July 28, 202 5 regarding introduction of n ew Broadcast Parameters  for market data  in Futures & Options 
+Segment . 
+ 
+In the aforesaid circulars, the Exchange ha d announced enhancements to market data dissemination through 
+new transcodes for Ticker and Market Index, Market Watch updates, Bhavcopy updates, and Underlying Open 
+Interest  and released the new parameters for receiving the broadcast in LIVE w.e.f July 21, 2025. Since then,  
+Exchange has  provide d a coexistence phase for receiving broadcast from both existing and new parameters, 
+after which Exchange shall discontinue the existing broadcast parameters .  
+ 
+Accordingly, members using NNF may note th at the discontinuation date of coexistence period has been 
+extended as below . Members shall ensure readiness of their migration plan before the extended deadline  and 
+note that t here shall not be any further extension.  
+ 
+Functionality  Date  
+Discontinuation of existing market data broadcast for NNF users (5 depth 1 
+second refresh)  October 04, 2025  
+(mock)  
+ 
+Please note all other details as mentioned in the circular  (NSE/MSD/69328 ) shall remain unchanged.  
+ 
+For and on behalf of  
+National Stock Exchange of India Limited  
+ 
+Khushal Shah  
+Associate Vice President  
+ 
+
+--- Page 2 ---
+ 
+National Stock Exchange of India  Limited  
+Page 2 of 2 
+ 
+ 
+ 
+ 
+General Notes applicable for all types of market data broadcast:  
+• The size of broadcast indicated above is an estimated approximation and shall change depending upon 
+the market activity. Thus, Market participants are strongly advised to monitor and adequately size their 
+infrastructure and systems while subscribing to the se feeds.   
+• With respect to using Exchange data, Member’s may kindly take note of Exchange circular s 
+NSE/MSD/64333  dated October 03, 2024 , NSE/COMP/56426  dated April 20, 2023 and NSE/MEM/26958  
+dated June 19, 2014. Exchange data can be used by Member’s clients who are registered for trading with 
+the member on the Exchange in any segment.  
+• With respect to using Exchange data, Member’s may also kindly take note of Exchange circular 
+NSE/MSD/54696  dated December 02, 2022 regarding Market Data Broadcasts – Advisory and Member 
+Guide.  
+• Members shall be solely responsible for implementing and maintaining redundancy for market data 
+broadcast subscribed from NSEIL. NSEIL shall not be held liable in any manner whatsoever including but 
+not limited to for any disconnection, excess bandwidth ut ilization, related latency issues’ etc. which arises 
+out of the member’s decisions on market data broadcast configurations . 
+• National Stock Exchange of India Limited (“NSEIL”) strongly recommends its members to build resilience 
+and redundancy in their subscription to market data broadcast provided by NSEIL, to ensure continuity of 
+their business operations. NSEIL has made enabli ng provisions for members to implement redundancies 
+by providing two sources of data and/or data recovery mechanisms. Members shall be solely responsible 
+for implementing and maintaining redundancy for market data broadcast subscribed from NSEIL. NSEIL 
+shall not be held liable in any manner whatsoever including but not limited to for any disconnection, 
+excess bandwidth utilization, related latency issues’ etc. which arises out of the member’s decisions on 
+market data broadcast configurations.  Toll Free No  Email id  
+1800 -266 -0050 (Option 1)  msm@nse.co.in  
