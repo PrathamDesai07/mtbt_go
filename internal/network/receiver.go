@@ -15,6 +15,7 @@ import (
 // ReceiverCore handles UDP packet reception on a single core
 type ReceiverCore struct {
 	coreID   int
+	streamID int
 	queue    *core.SPSCRingBuffer
 	socket   *net.UDPConn
 	fd       int
@@ -129,12 +130,18 @@ func (rc *ReceiverCore) receiveLoop() {
 
 		atomic.AddUint64(&rc.metrics.PacketsReceived, 1)
 
-		// Parse minimal header for fast processing
+		// Parse MTBT packet according to v6.7 specification
 		msg := rc.parsePacket(rc.buffer[:n])
 		if msg == nil {
 			atomic.AddUint64(&rc.metrics.PacketsDropped, 1)
 			continue
 		}
+
+		// Optional: Log first few messages for debugging
+		// if atomic.LoadUint64(&rc.metrics.PacketsProcessed) < 5 {
+		//     fmt.Printf("FO Stream %d: MsgType=%c, SeqNo=%d, PayloadLen=%d\n", 
+		//         rc.streamID, msg.MsgType, msg.SeqNo, len(msg.Payload))
+		// }
 
 		// Enqueue for processing
 		if !rc.queue.Enqueue(msg) {
@@ -147,37 +154,80 @@ func (rc *ReceiverCore) receiveLoop() {
 	}
 }
 
-// parsePacket extracts key fields from MTBT packet
+// parsePacket extracts and validates MTBT v6.7 protocol fields
 func (rc *ReceiverCore) parsePacket(data []byte) *core.RawMessage {
 	if len(data) < 8 { // Minimum header size
 		return nil
 	}
 
-	// Parse stream header (little endian)
+	// Parse MTBT stream header (little endian as per specification)
 	header := core.StreamHeader{
 		MsgLen:   binary.LittleEndian.Uint16(data[0:2]),
 		StreamID: binary.LittleEndian.Uint16(data[2:4]),
 		SeqNo:    binary.LittleEndian.Uint32(data[4:8]),
 	}
 
-	if len(data) < int(header.MsgLen) {
-		return nil // Invalid packet
+	// Validate packet integrity
+	if len(data) < int(header.MsgLen) || header.MsgLen < 9 {
+		return nil // Invalid packet size
+	}
+
+	// Validate stream ID matches expected
+	if int(header.StreamID) != rc.streamID {
+		// This could be valid if NSE sends multi-stream packets
+		// but log for monitoring
+		// fmt.Printf("Stream ID mismatch: expected %d, got %d\n", rc.streamID, header.StreamID)
 	}
 
 	if len(data) < 9 { // Need at least message type
 		return nil
 	}
 
-	// Create message with minimal processing
+	// Extract message type (first byte after header)
+	msgType := data[8]
+
+	// Validate message type according to MTBT v6.7 specification
+	if !rc.isValidMTBTMessageType(msgType) {
+		return nil // Invalid message type
+	}
+
+	// Create message with full payload
 	msg := &core.RawMessage{
 		StreamID:  header.StreamID,
 		SeqNo:     header.SeqNo,
-		MsgType:   data[8], // First byte after header
-		Payload:   data[8:header.MsgLen], // Copy payload
+		MsgType:   msgType,
+		Payload:   make([]byte, header.MsgLen-8), // Exclude header
 		Timestamp: core.RDTSC(),
 	}
 
+	// Copy payload (excluding header)
+	copy(msg.Payload, data[8:header.MsgLen])
+
 	return msg
+}
+
+// isValidMTBTMessageType validates message types according to MTBT v6.7 specification
+func (rc *ReceiverCore) isValidMTBTMessageType(msgType byte) bool {
+	switch msgType {
+	case 'N': // ORDER MESSAGE - New order
+		return true
+	case 'M': // ORDER MESSAGE - Modify order
+		return true
+	case 'X': // ORDER MESSAGE - Cancel order
+		return true
+	case 'T': // TRADE MESSAGE
+		return true
+	case 'G': // SPREAD ORDER MESSAGE
+		return true
+	case 'S': // SPREAD TRADE MESSAGE
+		return true
+	case 'C': // TRADE CANCEL MESSAGE
+		return true
+	case 'H': // HEARTBEAT MESSAGE
+		return true
+	default:
+		return false
+	}
 }
 
 // pinToCPU pins the current goroutine to the assigned CPU core
@@ -213,4 +263,9 @@ func (rc *ReceiverCore) GetMetrics() core.Metrics {
 // GetQueueDepth returns current queue utilization
 func (rc *ReceiverCore) GetQueueDepth() uint64 {
 	return rc.queue.Depth()
+}
+
+// SetStreamID sets the MTBT stream ID for this receiver
+func (rc *ReceiverCore) SetStreamID(streamID int) {
+	rc.streamID = streamID
 }

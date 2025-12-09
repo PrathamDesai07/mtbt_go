@@ -3,6 +3,7 @@ package orderbook
 import (
 	"encoding/binary"
 	"fmt"
+	"log"
 	"runtime"
 	"sync/atomic"
 	"time"
@@ -29,14 +30,16 @@ func NewMessageHandler() *MessageHandler {
 	}
 }
 
-// Start begins message processing on core 5
-func (mh *MessageHandler) Start(queues [4]*core.SPSCRingBuffer) error {
+// Start begins message processing with variable number of FO streams
+func (mh *MessageHandler) Start(queues []*core.SPSCRingBuffer) error {
 	if !atomic.CompareAndSwapInt64(&mh.running, 0, 1) {
 		return fmt.Errorf("message handler already running")
 	}
 
-	// Pin to core 5
-	err := mh.pinToCPU(4) // Core 5 (0-indexed)
+	log.Printf("Starting message handler for %d FO streams", len(queues))
+
+	// Pin to last available core 
+	err := mh.pinToCPU(runtime.NumCPU() - 1)
 	if err != nil {
 		return fmt.Errorf("failed to pin to CPU: %w", err)
 	}
@@ -124,7 +127,7 @@ func (mh *MessageHandler) handleNewOrder(msg *core.RawMessage) {
 	contract.OrdersById.Put(order.OrderID, newOrder)
 
 	// Add to appropriate price tree
-	var tree *PriceTree
+	var tree core.PriceTreeInterface
 	if order.Side == core.SideBuy {
 		tree = contract.Bids
 	} else {
@@ -158,7 +161,7 @@ func (mh *MessageHandler) handleModifyOrder(msg *core.RawMessage) {
 		RemoveOrderFromLevel(existingOrder)
 		existingOrder.Price = orderMsg.Price
 
-		var tree *PriceTree
+		var tree core.PriceTreeInterface
 		if existingOrder.Side == core.SideBuy {
 			tree = contract.Bids
 		} else {
@@ -298,7 +301,7 @@ func (mh *MessageHandler) restoreOrderQuantity(contract *core.Contract, orderID 
 
 		contract.OrdersById.Put(orderID, restoredOrder)
 
-		var tree *PriceTree
+		var tree core.PriceTreeInterface
 		if side == core.SideBuy {
 			tree = contract.Bids
 		} else {

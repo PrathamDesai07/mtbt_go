@@ -10,7 +10,7 @@ import (
 
 // SequenceMerger handles strict sequence ordering across multiple streams
 type SequenceMerger struct {
-	queues         [4]*core.SPSCRingBuffer
+	queues         []*core.SPSCRingBuffer
 	lastAppliedSeq map[uint16]uint32  // streamID -> last applied sequence
 	expectedSeq    map[uint16]uint32  // streamID -> next expected sequence
 	gapBuffer      map[uint16][]*core.RawMessage // Out-of-order messages
@@ -28,8 +28,14 @@ func NewSequenceMerger() *SequenceMerger {
 }
 
 // SetQueues configures input queues from receiver cores
-func (sm *SequenceMerger) SetQueues(queues [4]*core.SPSCRingBuffer) {
+func (sm *SequenceMerger) SetQueues(queues []*core.SPSCRingBuffer) {
 	sm.queues = queues
+	
+	// Initialize sequence tracking for each stream
+	for i := range queues {
+		// Stream IDs will be determined dynamically from incoming messages
+		_ = i // Suppress unused variable warning for now
+	}
 }
 
 // GetNextMessage returns the next message in strict sequence order
@@ -38,8 +44,9 @@ func (sm *SequenceMerger) GetNextMessage() *core.RawMessage {
 	var oldest *core.RawMessage
 	var oldestQueue int = -1
 
-	for i := 0; i < 4; i++ {
-		if msg := sm.queues[i].Peek(); msg != nil {
+	// Check all available queues
+	for i, queue := range sm.queues {
+		if msg := queue.Peek(); msg != nil {
 			if oldest == nil || msg.SeqNo < oldest.SeqNo || 
 			   (msg.SeqNo == oldest.SeqNo && msg.StreamID < oldest.StreamID) {
 				oldest = msg

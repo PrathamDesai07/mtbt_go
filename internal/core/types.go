@@ -77,12 +77,27 @@ type PriceLevel struct {
 	_          [24]byte // Cache line padding
 }
 
+// OrderMapInterface defines the order map interface
+type OrderMapInterface interface {
+	Get(uint64) *Order
+	Put(uint64, *Order) bool
+	Delete(uint64) bool
+}
+
+// PriceTreeInterface defines the price tree interface  
+type PriceTreeInterface interface {
+	GetOrCreate(int32) *PriceLevel
+	GetBestBid() *PriceLevel
+	GetBestAsk() *PriceLevel
+	Remove(int32)
+}
+
 // Contract represents the orderbook for a single instrument
 type Contract struct {
 	Token       uint32
-	OrdersById  *OrderMap
-	Bids        *PriceTree
-	Asks        *PriceTree
+	OrdersById  OrderMapInterface
+	Bids        PriceTreeInterface
+	Asks        PriceTreeInterface
 	LastUpdate  uint64
 	_           [32]byte // Cache line padding
 }
@@ -186,16 +201,4 @@ func AlignToCacheLine(ptr unsafe.Pointer) unsafe.Pointer {
 	return unsafe.Pointer(aligned)
 }
 
-// Forward declarations for orderbook components
-type OrderMap interface {
-	Get(orderID uint64) *Order
-	Put(orderID uint64, order *Order) bool
-	Delete(orderID uint64) bool
-}
-
-type PriceTree interface {
-	GetOrCreate(price int32) *PriceLevel
-	GetBestBid() *PriceLevel
-	GetBestAsk() *PriceLevel
-	Remove(price int32)
-}
+// Forward declarations removed - using concrete types instead

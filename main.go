@@ -16,7 +16,7 @@ import (
 
 // OrderbookSystem orchestrates the entire HFT orderbook system
 type OrderbookSystem struct {
-	receivers      [4]*network.ReceiverCore
+	streamManager  *network.StreamManager
 	messageHandler *orderbook.MessageHandler
 	config         *SystemConfig
 	running        bool
@@ -24,51 +24,61 @@ type OrderbookSystem struct {
 
 // SystemConfig holds system configuration
 type SystemConfig struct {
-	MulticastIPs   [4]string // Primary multicast IPs for 4 receivers
-	MulticastPorts [4]int    // Ports for each receiver
-	CoreMapping    [5]int    // CPU cores for each component (0-3: receivers, 4: engine)
-	LogLevel       string
+	NumCPUCores     int      // Total CPU cores available
+	ReceiverCores   int      // Cores dedicated to receivers  
+	OrderbookCore   int      // Core for orderbook processing
+	EnableFOStreams bool     // Enable FO MTBT streams
+	LogLevel        string
+	DebugMode       bool     // Enable debug logging
 }
 
 // DefaultConfig returns a default system configuration
 func DefaultConfig() *SystemConfig {
+	numCPU := runtime.NumCPU()
+	if numCPU < 2 {
+		numCPU = 2 // Minimum required
+	}
+	
 	return &SystemConfig{
-		MulticastIPs: [4]string{
-			"224.0.1.1", // Stream 1
-			"224.0.1.2", // Stream 2  
-			"224.0.1.3", // Stream 3
-			"224.0.1.4", // Stream 4
-		},
-		MulticastPorts: [4]int{9001, 9002, 9003, 9004},
-		CoreMapping:    [5]int{0, 1, 2, 3, 4}, // Cores 0-4
-		LogLevel:       "INFO",
+		NumCPUCores:     numCPU,
+		ReceiverCores:   numCPU - 1, // Reserve 1 core for orderbook
+		OrderbookCore:   numCPU - 1, // Last core for orderbook
+		EnableFOStreams: true,
+		LogLevel:        "INFO",
+		DebugMode:       false,
 	}
 }
 
 // NewOrderbookSystem creates a new orderbook system
 func NewOrderbookSystem(config *SystemConfig) (*OrderbookSystem, error) {
-	// Set GOMAXPROCS to exactly 5 cores
-	runtime.GOMAXPROCS(5)
+	// Set GOMAXPROCS to use all available cores
+	runtime.GOMAXPROCS(config.NumCPUCores)
+
+	log.Printf("Initializing HFT Orderbook System with %d CPU cores", config.NumCPUCores)
+	log.Printf("Receiver cores: %d, Orderbook core: %d", config.ReceiverCores, config.OrderbookCore)
 
 	system := &OrderbookSystem{
 		config: config,
 	}
 
-	// Create receiver cores
-	for i := 0; i < 4; i++ {
-		receiver, err := network.NewReceiverCore(
-			config.CoreMapping[i],
-			config.MulticastIPs[i],
-			config.MulticastPorts[i],
+	// Create stream manager for FO streams
+	if config.EnableFOStreams {
+		streamManager, err := network.NewStreamManager(
+			network.FOStreamConfig, 
+			config.ReceiverCores,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("failed to create receiver core %d: %w", i, err)
+			return nil, fmt.Errorf("failed to create stream manager: %w", err)
 		}
-		system.receivers[i] = receiver
+		system.streamManager = streamManager
+		log.Printf("Created stream manager for %d FO streams", len(network.FOStreamConfig))
+	} else {
+		return nil, fmt.Errorf("FO streams must be enabled for this system")
 	}
 
 	// Create message handler
 	system.messageHandler = orderbook.NewMessageHandler()
+	log.Println("Message handler created")
 
 	return system, nil
 }
@@ -76,34 +86,30 @@ func NewOrderbookSystem(config *SystemConfig) (*OrderbookSystem, error) {
 // Start initializes and starts the orderbook system
 func (sys *OrderbookSystem) Start() error {
 	log.Println("Starting Ultra-Low-Latency Orderbook System...")
+	log.Printf("Target: 18 FO MTBT streams, %d CPU cores", sys.config.NumCPUCores)
 
-	// Start receiver cores first
-	for i := 0; i < 4; i++ {
-		log.Printf("Starting receiver core %d on CPU %d", i, sys.config.CoreMapping[i])
-		err := sys.receivers[i].Start()
-		if err != nil {
-			return fmt.Errorf("failed to start receiver core %d: %w", i, err)
-		}
+	// Start stream manager
+	err := sys.streamManager.Start()
+	if err != nil {
+		return fmt.Errorf("failed to start stream manager: %w", err)
 	}
 
 	// Allow receivers to initialize
 	time.Sleep(100 * time.Millisecond)
 
-	// Collect receiver queues
-	var queues [4]*core.SPSCRingBuffer
-	for i := 0; i < 4; i++ {
-		queues[i] = sys.receivers[i].GetQueue()
-	}
+	// Get all receiver queues
+	queues := sys.streamManager.GetQueues()
+	log.Printf("Collected %d receiver queues", len(queues))
 
-	// Start message handler on core 5
-	log.Printf("Starting message handler on CPU %d", sys.config.CoreMapping[4])
-	err := sys.messageHandler.Start(queues)
+	// Start message handler on dedicated core
+	log.Printf("Starting message handler on CPU %d", sys.config.OrderbookCore)
+	err = sys.messageHandler.Start(queues)
 	if err != nil {
 		return fmt.Errorf("failed to start message handler: %w", err)
 	}
 
 	sys.running = true
-	log.Println("Orderbook system started successfully")
+	log.Printf("Orderbook system started successfully - monitoring %d FO streams", len(network.FOStreamConfig))
 
 	return nil
 }
@@ -115,11 +121,13 @@ func (sys *OrderbookSystem) Stop() {
 	sys.running = false
 
 	// Stop message handler
-	sys.messageHandler.Stop()
+	if sys.messageHandler != nil {
+		sys.messageHandler.Stop()
+	}
 
-	// Stop receiver cores
-	for i := 0; i < 4; i++ {
-		sys.receivers[i].Stop()
+	// Stop stream manager
+	if sys.streamManager != nil {
+		sys.streamManager.Stop()
 	}
 
 	log.Println("Orderbook system stopped")
@@ -128,17 +136,21 @@ func (sys *OrderbookSystem) Stop() {
 // GetMetrics returns system performance metrics
 func (sys *OrderbookSystem) GetMetrics() SystemMetrics {
 	metrics := SystemMetrics{
-		Timestamp: time.Now(),
+		Timestamp:    time.Now(),
+		StreamCount:  len(network.FOStreamConfig),
+		ActiveCores:  sys.config.ReceiverCores + 1, // +1 for orderbook
 	}
 
-	// Collect receiver metrics
-	for i := 0; i < 4; i++ {
-		receiverMetrics := sys.receivers[i].GetMetrics()
-		metrics.TotalPacketsReceived += receiverMetrics.PacketsReceived
-		metrics.TotalPacketsProcessed += receiverMetrics.PacketsProcessed
-		metrics.TotalPacketsDropped += receiverMetrics.PacketsDropped
-		metrics.QueueDepths[i] = sys.receivers[i].GetQueueDepth()
-	}
+	// Collect stream manager metrics
+	streamMetrics := sys.streamManager.GetMetrics()
+	metrics.TotalPacketsReceived = streamMetrics.TotalPacketsReceived
+	metrics.TotalPacketsProcessed = streamMetrics.TotalPacketsProcessed
+	metrics.TotalPacketsDropped = streamMetrics.TotalPacketsDropped
+	metrics.TotalBandwidth = streamMetrics.TotalBandwidth
+	
+	// Resize QueueDepths to match actual streams
+	metrics.QueueDepths = make([]uint64, len(streamMetrics.QueueDepths))
+	copy(metrics.QueueDepths, streamMetrics.QueueDepths)
 
 	// Collect handler metrics
 	handlerMetrics := sys.messageHandler.GetMetrics()
@@ -151,22 +163,27 @@ func (sys *OrderbookSystem) GetMetrics() SystemMetrics {
 // SystemMetrics holds comprehensive system metrics
 type SystemMetrics struct {
 	Timestamp              time.Time
+	StreamCount            int
+	ActiveCores            int
 	TotalPacketsReceived   uint64
 	TotalPacketsProcessed  uint64
 	TotalPacketsDropped    uint64
-	QueueDepths            [4]uint64
+	QueueDepths            []uint64 // Dynamic size based on streams
 	OrderbookLatencyNs     uint64
 	GapsDetected           uint64
+	TotalBandwidth         string
 }
 
 // PrintMetrics displays current system metrics
 func (metrics SystemMetrics) Print() {
-	fmt.Printf("\n=== Orderbook System Metrics ===\n")
+	fmt.Printf("\n=== HFT Orderbook System Metrics ===\n")
 	fmt.Printf("Timestamp: %s\n", metrics.Timestamp.Format("2006-01-02 15:04:05.000"))
+	fmt.Printf("FO Streams Active: %d\n", metrics.StreamCount)
+	fmt.Printf("CPU Cores Used: %d\n", metrics.ActiveCores)
+	fmt.Printf("Total Bandwidth: %s\n", metrics.TotalBandwidth)
 	fmt.Printf("Packets Received: %d\n", metrics.TotalPacketsReceived)
 	fmt.Printf("Packets Processed: %d\n", metrics.TotalPacketsProcessed)
 	fmt.Printf("Packets Dropped: %d\n", metrics.TotalPacketsDropped)
-	fmt.Printf("Queue Depths: %v\n", metrics.QueueDepths)
 	fmt.Printf("Orderbook Latency: %d ns\n", metrics.OrderbookLatencyNs)
 	fmt.Printf("Gaps Detected: %d\n", metrics.GapsDetected)
 	
@@ -174,7 +191,15 @@ func (metrics SystemMetrics) Print() {
 		dropRate := float64(metrics.TotalPacketsDropped) / float64(metrics.TotalPacketsReceived) * 100
 		fmt.Printf("Drop Rate: %.4f%%\n", dropRate)
 	}
-	fmt.Println("==============================")
+	
+	// Display queue depths (truncated if too many)
+	if len(metrics.QueueDepths) <= 8 {
+		fmt.Printf("Queue Depths: %v\n", metrics.QueueDepths)
+	} else {
+		fmt.Printf("Queue Depths [1-8]: %v\n", metrics.QueueDepths[:8])
+		fmt.Printf("Queue Depths [9-%d]: %v\n", len(metrics.QueueDepths), metrics.QueueDepths[8:])
+	}
+	fmt.Println("====================================")
 }
 
 // RunMetricsMonitor starts a goroutine that periodically prints metrics

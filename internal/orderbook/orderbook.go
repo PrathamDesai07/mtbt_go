@@ -1,7 +1,6 @@
 package orderbook
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/PrathamDesai07/mtbt_go/internal/core"
@@ -18,6 +17,19 @@ type OrderMap struct {
 	mask    uint64
 	size    int
 	pool    sync.Pool
+}
+
+// Embed OrderMap methods to make it compatible with core.OrderMap
+func (om *OrderMap) Get(orderID uint64) *core.Order {
+	return om.get(orderID)
+}
+
+func (om *OrderMap) Put(orderID uint64, order *core.Order) bool {
+	return om.put(orderID, order)
+}
+
+func (om *OrderMap) Delete(orderID uint64) bool {
+	return om.delete(orderID)
 }
 
 type OrderBucket struct {
@@ -48,8 +60,8 @@ func NewOrderMap(capacity int) *OrderMap {
 	return om
 }
 
-// Get retrieves an order by ID
-func (om *OrderMap) Get(orderID uint64) *core.Order {
+// get retrieves an order by ID (internal method)
+func (om *OrderMap) get(orderID uint64) *core.Order {
 	hash := core.FastHash64(orderID)
 	bucket := &om.buckets[hash&om.mask]
 
@@ -61,8 +73,8 @@ func (om *OrderMap) Get(orderID uint64) *core.Order {
 	return nil
 }
 
-// Put stores an order
-func (om *OrderMap) Put(orderID uint64, order *core.Order) bool {
+// put stores an order (internal method)
+func (om *OrderMap) put(orderID uint64, order *core.Order) bool {
 	hash := core.FastHash64(orderID)
 	bucket := &om.buckets[hash&om.mask]
 
@@ -84,8 +96,8 @@ func (om *OrderMap) Put(orderID uint64, order *core.Order) bool {
 	return false // Bucket full
 }
 
-// Delete removes an order
-func (om *OrderMap) Delete(orderID uint64) bool {
+// delete removes an order (internal method)
+func (om *OrderMap) delete(orderID uint64) bool {
 	hash := core.FastHash64(orderID)
 	bucket := &om.buckets[hash&om.mask]
 
@@ -110,6 +122,23 @@ type PriceTree struct {
 	ascending bool // true for asks, false for bids
 	levels    [][]*PriceNode
 	pool      sync.Pool
+}
+
+// Embed PriceTree methods to make it compatible
+func (pt *PriceTree) GetOrCreate(price int32) *core.PriceLevel {
+	return pt.getOrCreate(price)
+}
+
+func (pt *PriceTree) GetBestBid() *core.PriceLevel {
+	return pt.getBestBid()
+}
+
+func (pt *PriceTree) GetBestAsk() *core.PriceLevel {
+	return pt.getBestAsk()
+}
+
+func (pt *PriceTree) Remove(price int32) {
+	pt.remove(price)
 }
 
 type PriceNode struct {
@@ -140,8 +169,8 @@ func NewPriceTree(ascending bool) *PriceTree {
 	return pt
 }
 
-// GetOrCreate retrieves or creates a price level
-func (pt *PriceTree) GetOrCreate(price int32) *core.PriceLevel {
+// getOrCreate retrieves or creates a price level (internal method)
+func (pt *PriceTree) getOrCreate(price int32) *core.PriceLevel {
 	node := pt.find(price)
 	if node != nil && node.price == price {
 		return node.level
@@ -284,8 +313,8 @@ func RemoveOrderFromLevel(order *core.Order) {
 	order.PrevOrder = nil
 }
 
-// GetBestBid returns the highest bid price
-func (pt *PriceTree) GetBestBid() *core.PriceLevel {
+// getBestBid returns the highest bid price (internal method)
+func (pt *PriceTree) getBestBid() *core.PriceLevel {
 	if pt.ascending {
 		return nil // This is an ask tree
 	}
@@ -296,8 +325,8 @@ func (pt *PriceTree) GetBestBid() *core.PriceLevel {
 	return nil
 }
 
-// GetBestAsk returns the lowest ask price
-func (pt *PriceTree) GetBestAsk() *core.PriceLevel {
+// getBestAsk returns the lowest ask price (internal method)
+func (pt *PriceTree) getBestAsk() *core.PriceLevel {
 	if !pt.ascending {
 		return nil // This is a bid tree
 	}
@@ -308,8 +337,8 @@ func (pt *PriceTree) GetBestAsk() *core.PriceLevel {
 	return nil
 }
 
-// Remove deletes a price level if empty
-func (pt *PriceTree) Remove(price int32) {
+// remove deletes a price level if empty (internal method)
+func (pt *PriceTree) remove(price int32) {
 	update := make([]*PriceNode, MaxLevel+1)
 	current := pt.header
 
